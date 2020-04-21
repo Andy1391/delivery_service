@@ -1,11 +1,15 @@
 class Bike < Transport
 
-  attr_accessor :max_distance
+  attr_reader :max_distance , :max_weight , :speed
 
-  def initialize
-    @max_weight = 10
+  BIKE_MAX_WEIGHT = 10
+  BIKE_MAX_DISTANCE = 30
+
+  def initialize(current_weight, is_available)
+    @max_weight = BIKE_MAX_WEIGHT
     @speed = 10
-    @max_distance = 30
-  end
-  
+    @max_distance = BIKE_MAX_DISTANCE      
+    @current_weight = current_weight  
+    @available = is_available
+  end  
 end

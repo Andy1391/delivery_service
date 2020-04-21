@@ -1,22 +1,21 @@
-class DeliveryService 
+class DeliveryService
 
-  attr_accessor :delivery_confirmed, :distance
-  
-  BIKE_MAX_WEIGHT = 10
-  BIKE_MAX_DISTANCE = 30
-  CAR_MAX_WEIGHT = 100
+  attr_accessor :delivery_confirmed, :distance , :weight 
 
-  def initialize(weight, distance)
+  def initialize(weight, distance)    
     @weight = weight
     @distance = distance
-    @delivery_confirmed = false
+    @delivery_confirmed = false 
+    @park = Array.new
+    @park << Car.new(rand(9), 'xxx' , true) << Car.new(rand(9), 'xxx1' , false)  
+    @park << Bike.new(rand(5), true) << @park << Bike.new(rand(5), false)     
   end 
 
   def choose_transport_type
-    if @weight <= BIKE_MAX_WEIGHT && @distance <= BIKE_MAX_DISTANCE
-      puts 'Transport for your delivery - Bike'
-    elsif @weight <= CAR_MAX_WEIGHT
-      puts 'Transport for your delivery - Car'
+    if @weight <= Bike::BIKE_MAX_WEIGHT && @distance <= Bike::BIKE_MAX_DISTANCE
+      @park.find {|i| i.class == Bike && i.available == true}
+    elsif @weight <= Car::CAR_MAX_WEIGHT
+      @park.find {|i| i.class == Car && i.available == true}
     else
       puts "Sorry, we can't deliver weight more than 100kg "
     end

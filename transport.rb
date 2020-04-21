@@ -1,18 +1,45 @@
 class Transport
 
-  CONVERT_TO_MINUTES = 60
+  include Comparable , Enumerable
 
-  attr_accessor :max_weight, :speed, :available
+  attr_accessor :current_weight , :available
 
-  def initialize(max_weight, speed, available)
-    @max_weight = max_weight
-    @speed = speed
-    @available = available
+  CONVERT_TO_MINUTES = 60 
+
+  def initialize(current_weight)
+    @current_weight = current_weight
+    @available = true
+  end
+  
+  def max_weight
+    raise NotImplementedError
   end
 
-  def delivery_time(distance)
-    @time = distance / @speed 
-    return @time * CONVERT_TO_MINUTES 
+  def max_weight=(value)
+    raise NotImplementedError
   end
 
+  def speed
+    raise NotImplementedError
+  end
+
+  def speed=(value)
+    raise NotImplementedError
+  end
+
+   def toggle_available
+    if @available == true
+      return @available = false
+    else
+      return @available = true
+    end
+  end
+
+  def delivery_time(distance)    
+    return (distance / @speed) * CONVERT_TO_MINUTES 
+  end
+
+  def <=> (other)
+    self.current_weight <=> other.current_weight
+  end
 end
