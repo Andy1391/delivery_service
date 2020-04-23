@@ -1,16 +1,16 @@
 class Transport
 
-  include Comparable , Enumerable
+  include Comparable, Enumerable
 
-  attr_reader :current_weight , :available
+  attr_reader :current_weight, :available
 
-  CONVERT_TO_MINUTES = 60 
+  CONVERT_TO_MINUTES = 60
 
   def initialize
-    raise NotImplementedError    
+    raise NotImplementedError
   end
 
-   def toggle_available
+  def toggle_available
     if available = !available
       available = false
     else
@@ -19,14 +19,10 @@ class Transport
   end
 
   def available?
-    if available == true
-      true
-    else 
-      false 
-    end  
+    available == true
   end
 
-  def delivery_time(distance)    
-    (distance / @speed) * CONVERT_TO_MINUTES 
+  def delivery_time(distance)
+    (distance / @speed) * CONVERT_TO_MINUTES
   end
 end
