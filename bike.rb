@@ -12,4 +12,12 @@ class Bike < Transport
     @current_weight = current_weight  
     @available = is_available
   end  
+
+    def available?
+      if @weight <= Bike::BIKE_MAX_WEIGHT && @distance <= Bike::BIKE_MAX_DISTANCE     
+        super
+      else
+        false
+      end
+    end
 end

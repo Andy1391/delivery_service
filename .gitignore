@@ -6,4 +6,4 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-./coverage
+/coverage

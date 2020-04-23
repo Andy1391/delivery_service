@@ -12,13 +12,7 @@ class DeliveryService
   end 
 
   def choose_transport_type
-    if @weight <= Bike::BIKE_MAX_WEIGHT && @distance <= Bike::BIKE_MAX_DISTANCE
-      @park.find {|i| i.class == Bike && i.available == true}
-    elsif @weight <= Car::CAR_MAX_WEIGHT
-      @park.find {|i| i.class == Car && i.available == true}
-    else
-      puts "Sorry, we can't deliver weight more than 100kg "
-    end
+    @park.find(&:available?)
   end
 
   def delivery_confirmed?
