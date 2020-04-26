@@ -1,19 +1,17 @@
 class Transport
-
-  include Comparable, Enumerable
+  include Comparable
+  include Enumerable
 
   attr_reader :package_weight, :available, :location, :number_of_deliveries, :delivery_cost
 
-  @@transports = []
-
   CONVERT_TO_MINUTES = 60
 
-  def initialize    
-    @@transports << self
+  def initialize
+    raise NotImplementedError
   end
 
   def toggle_available!
-    available = !available   
+    available = !available
   end
 
   def available?
@@ -24,12 +22,11 @@ class Transport
     (distance / @speed) * CONVERT_TO_MINUTES
   end
 
-  def self.all
-    @@transports.size
-  end
-
-  class << self
-    def find_by_available(available)      
+  def toggle_location!
+    if location == 'In garage'
+      location = 'On route'
+    else
+      location = 'In garage'
     end
   end
 end

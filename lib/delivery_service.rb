@@ -1,5 +1,4 @@
 class DeliveryService
-
   attr_accessor :delivery_confirmed, :distance, :weight
 
   def initialize(weight, distance)
@@ -7,8 +6,8 @@ class DeliveryService
     @distance = distance
     @delivery_confirmed = false
     @park = []
-    @park << Car.new(rand(9), 'xxx', true) << Car.new(rand(9), 'xxx1', false)
-    @park << Bike.new(rand(5), true) << @park << Bike.new(rand(5), false)
+    @park << Car.new(5, 'xxx', true) << Car.new(4, 'xxx1', true)
+    @park << Bike.new(3, true) << Bike.new(5, true)
   end
 
   def choose_transport_type
