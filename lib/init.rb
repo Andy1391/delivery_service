@@ -10,10 +10,9 @@ order = DeliveryService.new(5, 5.0)
 
 # bike = Bike.new(111, true)
 # car = Car.new(11, 'AA3333EB', true)
-p Bike.filter_by_package_weight { |b| b.package_weight > 1}
+# p Bike.filter_by_package_weight { |b| b.package_weight > 1}
 
 # puts "Delivery time's: '#{bike.delivery_time(order.distance)}' minutes"
 # puts "Delivery time's: '#{car.delivery_time(order2.distance)}' minutes"
 
-# # p Car.filter_by_delivery_cost{ |car| car.delivery_cost > 3}
-# 2.times do p car.toggle_location! end
+p Bike.find_by_delivery_cost(3)
