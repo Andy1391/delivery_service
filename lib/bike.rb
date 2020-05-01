@@ -6,7 +6,7 @@ class Bike < Transport
   BIKE_MAX_WEIGHT = 10
   BIKE_MAX_DISTANCE = 30
   BIKE_DELIVERY_COST = 3
-  ALL_BIKE_ATRIBUTES = %w[package_weight available location number_of_deliveries delivery_cost]
+  ALL_BIKE_ATRIBUTES = %w[package_weight available location number_of_deliveries delivery_cost].freeze
 
   def initialize(package_weight, is_available)
     @max_weight = BIKE_MAX_WEIGHT
@@ -24,7 +24,7 @@ class Bike < Transport
     @@bikes.size
   end
 
-   ALL_BIKE_ATRIBUTES.each do |i|
+  ALL_BIKE_ATRIBUTES.each do |i|
     define_singleton_method("find_by_#{i}".to_sym) do |value|
       @@bikes.find { |bike| bike.send(i) == value }
     end

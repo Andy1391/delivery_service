@@ -5,7 +5,7 @@ class Car < Transport
 
   CAR_MAX_WEIGHT = 100
   CAR_DELIVERY_COST = 5
-  ALL_CAR_ATRIBUTES = %w[package_weight available location number_of_deliveries delivery_cost]
+  ALL_CAR_ATRIBUTES = %w[package_weight available location number_of_deliveries delivery_cost].freeze
 
   def initialize(package_weight, registration_number, is_available)
     @max_weight = CAR_MAX_WEIGHT
@@ -30,8 +30,8 @@ class Car < Transport
   end
 
   ALL_CAR_ATRIBUTES.each do |i|
-    define_singleton_method("filter_by_#{i}".to_sym) do |&block|       
-      #
+    define_singleton_method("filter_by_#{i}".to_sym) do |&block|
+      @@cars.select { |car| block.call(car.send(i)) }
     end
   end
 end
