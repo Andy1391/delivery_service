@@ -29,4 +29,10 @@ class Bike < Transport
       @@bikes.find { |bike| bike.send(i) == value }
     end
   end
+
+   ALL_BIKE_ATRIBUTES.each do |i|
+    define_singleton_method("filter_by_#{i}".to_sym) do |&block|
+      @@bikes.select { |bike| block.call(bike.send(i)) }
+    end
+  end
 end
