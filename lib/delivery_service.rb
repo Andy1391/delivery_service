@@ -1,33 +1,20 @@
 class DeliveryService
-
-  attr_accessor :delivery_confirmed, :distance , :weight  
+  attr_accessor :delivery_confirmed, :distance, :weight
 
   def initialize(weight, distance)
     @weight = weight
     @distance = distance
     @delivery_confirmed = false
-  end 
-
-  def choose_transport_type
-    if @weight <= Bike::BIKE_MAX_WEIGHT && @distance <= Bike::BIKE_MAX_DISTANCE
-      puts 'Transport for your delivery - Bike'
-    elsif @weight <= Car::CAR_MAX_WEIGHT
-      puts 'Transport for your delivery - Car'
-    else
-      puts "Sorry, we can't deliver weight more than 100kg "
-    end
+    @park = []
+    @park << Bike.new(2, true) << Bike.new(3, false)
+    @park << Car.new(11, false, 'AE6754HO') << Car.new(13, true, 'AA1122CC')    
   end
 
-  def delivery_confirmed?
-    puts "Confirm delivery? Enter only Y/N"
-    string = gets.chomp   
-    if string.upcase == 'Y' 
-      @delivery_confirmed = true
-      puts 'Delivery confirmed'
-    elsif string.upcase == 'N'      
-      puts 'Delivery declined'
-    else 
-      puts "Please, enter only Y or N"      
-    end
+  def choose_transport_type
+    @park.find { |x| x.available? && weight <= x.max_weight }
+  end
+
+  def toggle_confirm_delivery!
+    @delivery_confirmed = !@delivery_confirmed
   end
 end

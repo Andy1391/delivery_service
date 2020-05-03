@@ -1,27 +1,25 @@
-require 'rspec'
-require_relative '../lib/dependencies'
+require_relative 'spec_helper'
 
 RSpec.describe Car do
-  let(:car) { Car.new(10, true , 'XX11KK') }
+  subject(:car) { Car.new(7, true , 'XX11KK') }
+  subject(:car2) { Car.new(12, true , 'XX11KK') }
+  subject(:bike) { Bike.new(1, false) }
 
-  describe 'creation' do       
-    it 'should be with current_weight' do      
-      expect(car.current_weight).to eq(10)      
+  describe '#<=>' do
+    context 'compares car delivery speed' do
+      it { expect(bike < car).to be false }      
     end
 
-    it 'should be available' do      
-      expect(car.available).to be true      
-    end
-
-    it 'return registration number' do      
-      expect(car.registration_number).to eq('XX11KK')      
+    context 'compares cars delivery speed' do      
+      it { expect(car == car2).to be true }
     end
   end
 
-  describe 'constants' do
-    it 'return CAR_MAX_WEIGHT constant ' do
-      expect(Car::CAR_MAX_WEIGHT).to eq(100)
+  describe '#delivery_time' do
+    context 'check car delivery time' do
+      order = DeliveryService.new(5, 100)
+      it { expect(car.delivery_time(order.distance)).to eq(120) }
     end
   end
- end
+end
  

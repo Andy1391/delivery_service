@@ -1,6 +1,7 @@
+require 'rspec'
+require_relative '../lib/dependencies'
 require 'simplecov'
 SimpleCov.start
-require_relative '../lib/dependencies'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

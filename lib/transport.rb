@@ -1,37 +1,28 @@
 class Transport
-
   include Comparable
+  include Enumerable
 
-  attr_accessor :current_weight , :available
+  attr_reader :package_weight, :speed, :available, :max_weight  
 
-  CONVERT_TO_MINUTES = 60 
+  CONVERT_TO_MINUTES = 60
 
-  def initialize(current_weight , is_available)
-    @current_weight = current_weight
-    @available = is_available
-  end
-  
-  def max_weight
+  def initialize
     raise NotImplementedError
   end
 
-  def max_weight=(value)
-    raise NotImplementedError
+  def toggle_available!
+    @available = !@available
   end
 
-  def speed
-    raise NotImplementedError
+  def available?
+    @available == true
   end
 
-  def speed=(value)
-    raise NotImplementedError
+  def delivery_time(distance)
+    (distance.to_f / @speed) * CONVERT_TO_MINUTES
   end
 
-  def delivery_time(distance)    
-    return (distance / @speed) * CONVERT_TO_MINUTES 
-  end
-
-  def <=> (other)
-    self.current_weight <=> other.current_weight
+  def <=>(other)
+    speed.to_f / max_weight <=> other.speed.to_f / other.max_weight
   end
 end
