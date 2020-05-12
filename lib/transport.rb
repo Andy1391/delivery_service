@@ -15,7 +15,7 @@ class Transport
   end
 
   def available?
-    @available == true
+    @available
   end
 
   def delivery_time(distance)

@@ -1,14 +1,6 @@
 require_relative 'dependencies'
 
-bike = Bike.new(5, true)
-car = Car.new(7, true, 'xxxx')
-car2 = Car.new(9, true, 'xxxx')
+park = [Bike.new(1, false), Bike.new(3, true), Car.new(11, true, 'KK8876OO')]
 
-p car > car2
-p bike == bike
-p car2 >= car2
-
-p car.toggle_available!
-
-order = DeliveryService.new(5,29)
+order = DeliveryService.new(105, 5, park)
 p order.choose_transport_type
