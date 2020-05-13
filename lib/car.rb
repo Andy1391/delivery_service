@@ -10,4 +10,8 @@ class Car < Transport
     @package_weight = package_weight
     @registration_number = registration_number
   end
+
+  def available?(weight)
+  	super() && weight <= max_weight  	
+  end
 end

@@ -11,4 +11,8 @@ class Bike < Transport
     @available = is_available
     @package_weight = package_weight
   end
+
+  def available?(distance, weight)
+    super() && distance <= max_distance && weight <= max_weight
+  end
 end

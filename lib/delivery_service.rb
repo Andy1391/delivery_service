@@ -8,11 +8,13 @@ class DeliveryService
     @park = park
   end
 
-  def choose_transport_type
-    if distance > Bike::BIKE_MAX_DISTANCE
-      @park.find { |x|  x.available? && x.class == Car && weight <= x.max_weight }
-    else
-      @park.find { |x|  x.available? && weight <= x.max_weight } 
+  def choose_transport_type   
+    @park.find do |x| 
+      if x.class == Bike
+        x.available?(distance, weight)
+      else
+        x.available?(weight)
+      end
     end
   end
 
