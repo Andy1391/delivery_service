@@ -7,3 +7,6 @@
 !/log/.keep
 !/tmp/.keep
 /coverage
+/spec/coverage
+
+.rubocop.yml
