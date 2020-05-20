@@ -1,87 +1,86 @@
-require 'rspec'
-require_relative '../lib/dependencies'
-
-RSpec.describe Bike do 
-  before { DeliveryService.new(1,1) }
+RSpec.describe Bike do
+  let(:park) { [Bike.new(1, 'In garage'), Bike.new(3, 'On route'), Bike.new(6, 'In garage')] }
   
-  describe '.all method' do    
-    subject { Bike.all }
-    it 'should return all bikes from park' do      
-      expect(subject).to eq(2)
+  describe '.all' do       
+    context 'when need return all bikes from park' do
+      it { park }
+      it { expect(Bike.all.size).to eq(3) }       
     end
   end
 
-  describe '.find_by_available method' do
-    subject { Bike.find_by_available(true) }
-    it 'should return first available bike' do
-      expect(subject.available).to be true
+  describe '.find_by_available(value)' do
+    context 'when need to find available bike' do
+      it { expect(Bike.find_by_available(true).available).to be_truthy }
+    end
+
+    context 'when need to find not available bike' do
+      it { expect(Bike.find_by_available(false)).to be_nil }
     end
   end
 
-  describe '.filter_by_available methods' do
-    subject { Bike.filter_by_available(false) }
-    it 'should return all not available bike' do
-      expect(subject).to be_empty
+  describe '.filter_by_available(value)' do
+    context 'when need to find all available bikes' do
+      it { expect(Bike.filter_by_available(true).size).to eq(3) }
     end
   end
 
-  describe '.find_by_package_weight' do
-    subject { Bike.find_by_package_weight(3) }
-    it 'find first bike with equal package weight' do
-      expect(subject.package_weight).to eq(3)
+  describe '.find_by_package_weight(value)' do
+    context 'when need to find a bike with a specific package weight' do
+      it { expect(Bike.find_by_package_weight(3).package_weight).to eq(3) }
     end
   end
 
-  describe '.filter_by_package_weight' do
-    it "filter bikes by package weight" do
-      Bike.filter_by_package_weight do |bike|
-        expect(bike.package_weight).to be <= 5
-      end
-    end    
-  end
-
-  describe '.find_by_location' do
-    subject { Bike.find_by_location('In garage') }
-    it "find bike location" do      
-      expect(subject.location).to eq('In garage')
-    end
-  end  
-
-  describe '.filter_by_location' do
-    subject { Bike.filter_by_location('On route') }
-    it "return all bikes with 'On route' location" do      
-      expect(subject).to be_empty
-    end
-  end  
-
-  describe '.find_by_number_of_deliveries' do
-    subject { Bike.find_by_number_of_deliveries(0) }
-    it "return current number deliveries to bike" do      
-      expect(subject.number_of_deliveries).to eq(0)
-    end
-  end 
-
-  describe '.filter_by_number_of_deliveries' do    
-    it "filters bikes by delivery numbers" do 
-      Bike.filter_by_number_of_deliveries do |bike|     
-        expect(bike.number_of_deliveries).to eq(0)
-      end
+  describe '.filter_by_package_weight(block)' do     
+    context 'when to filter bikes by package weight ' do      
+      it { expect(Bike.filter_by_package_weight{ |n| n >= 3 }.size).to eq(2) }
     end
   end
 
-  describe '.find_by_delivery_cost' do
-    subject { Bike.find_by_delivery_cost(3) }
-    it "find bikes with current cost" do      
-      expect(subject.delivery_cost).to eq(3)
+  describe '.find_by_location(value)' do
+    context 'when the bike is in the garage' do
+      it { expect(Bike.find_by_location('In garage').location).to eq('In garage') }
     end
   end
 
-  describe 'filter_by_delivery_cost' do
-    it "filters bikes by delivery cost" do
-      Bike.filter_by_delivery_cost do |bike|     
-        expect(bike.delivery_cost).to eq(3) 
-      end
+  describe '.filter_by_location(value)' do
+    context 'when need to find all bikes by location' do
+      it { expect(Bike.filter_by_location('In garage').size).to eq(2) }
+      it { expect(Bike.filter_by_location('On route').size).to eq(1) }
+    end
+  end
+
+  describe '.find_by_number_of_deliveries(value)' do
+    context 'when bike need to find bike with number of deliveries' do
+      it { expect(Bike.find_by_number_of_deliveries(3)).to be_nil }
+    end
+  end
+
+  describe '.filter_by_number_of_deliveries(&block)' do
+    context 'when to filter bikes by number of deliveries' do
+      it { expect(Bike.filter_by_number_of_deliveries{ |n| n >= 0 }.size).to eq(3) }
+    end
+  end
+
+  describe '.find_by_delivery_cost(value)' do
+    context 'when find bike by delivery cost' do
+      it { expect(Bike.find_by_delivery_cost(3).delivery_cost).to eq(3) }
+    end
+  end
+
+  describe '.filter_by_delivery_cost(&block)' do
+    context 'when to filter bikes by delivery cost' do
+      it { expect(Bike.filter_by_delivery_cost{|n| n > 3}).to be_empty}
+      it { expect(Bike.filter_by_delivery_cost{|n| n < 5}.size).to eq(3)}
+    end
+  end
+  
+  describe '#delivery_time(distance)' do
+    subject(:bike) { Bike.new(package_weight, location)}
+    let(:package_weight) { 1 }
+    let(:location) { 'In garage' }
+    let(:distance) { 10 }  
+    context 'check bike delivery time' do         
+      it { expect(bike.delivery_time(distance)).to eq(60) }
     end
   end
 end
- 
