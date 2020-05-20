@@ -6,6 +6,7 @@ class Bike < Transport
   BIKE_MAX_WEIGHT = 10
   BIKE_MAX_DISTANCE = 30
   BIKE_DELIVERY_COST = 3
+  ALL_ATRIBUTES = %w[package_weight available location number_of_deliveries delivery_cost].freeze
 
   def initialize(package_weight, location)
     @max_weight = BIKE_MAX_WEIGHT

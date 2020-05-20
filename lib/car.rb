@@ -1,10 +1,11 @@
 class Car < Transport
-  attr_accessor :registration_number, :max_weight
+  attr_reader :registration_number, :max_weight
 
   @@cars = []
 
   CAR_MAX_WEIGHT = 100
   CAR_DELIVERY_COST = 5
+  ALL_ATRIBUTES = %w[package_weight available location number_of_deliveries delivery_cost].freeze
 
   def initialize(package_weight, registration_number, location)
     @max_weight = CAR_MAX_WEIGHT

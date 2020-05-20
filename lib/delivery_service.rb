@@ -1,5 +1,6 @@
 class DeliveryService
-  attr_accessor :delivery_confirmed, :distance, :weight
+  attr_accessor :delivery_confirmed
+  attr_reader :distance, :weight
 
   def initialize(weight, distance, park)
     @weight = weight

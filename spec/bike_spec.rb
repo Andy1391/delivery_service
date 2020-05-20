@@ -18,9 +18,9 @@ RSpec.describe Bike do
     end
   end
 
-  describe '.filter_by_available(value)' do
+  describe '.filter_by_available(&block)' do
     context 'when need to find all available bikes' do
-      it { expect(Bike.filter_by_available(true).size).to eq(3) }
+      it { expect(Bike.filter_by_available{ |n| n == true }.size).to eq(3) }
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.describe Bike do
     end
   end
 
-  describe '.filter_by_package_weight(block)' do     
+  describe '.filter_by_package_weight(&block)' do     
     context 'when to filter bikes by package weight ' do      
       it { expect(Bike.filter_by_package_weight{ |n| n >= 3 }.size).to eq(2) }
     end
@@ -42,10 +42,10 @@ RSpec.describe Bike do
     end
   end
 
-  describe '.filter_by_location(value)' do
+  describe '.filter_by_location(&block)' do
     context 'when need to find all bikes by location' do
-      it { expect(Bike.filter_by_location('In garage').size).to eq(2) }
-      it { expect(Bike.filter_by_location('On route').size).to eq(1) }
+      it { expect(Bike.filter_by_location{ |n| n == 'In garage' }.size).to eq(2) }
+      it { expect(Bike.filter_by_location{ |n| n == 'On route' }.size).to eq(1) }
     end
   end
 

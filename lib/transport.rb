@@ -6,6 +6,7 @@ class Transport
 
   CONVERT_TO_MINUTES = 60
   LOCATIONS = ['On route', 'In garage'].freeze
+  ALL_ATRIBUTES = %w[package_weight available location number_of_deliveries delivery_cost].freeze
 
   def initialize
     raise NotImplementedError
@@ -32,43 +33,15 @@ class Transport
     raise NotImplementedError unless LOCATIONS.include?(location)
   end
 
-  def self.find_by_available(value)
-    all.find { |transport| transport.available == value }
+  ALL_ATRIBUTES.each do |i|
+    define_singleton_method("find_by_#{i}".to_sym) do |value|
+      all.find { |tr| tr.send(i) == value }
+    end
   end
 
-  def self.filter_by_available(value)
-    all.select { |transport| transport.available == value }
-  end
-
-  def self.find_by_package_weight(value)
-    all.find { |transport| transport.package_weight == value }
-  end
-
-  def self.filter_by_package_weight(&block)
-    all.select { |transport| block.call(transport.package_weight) }
-  end
-
-  def self.find_by_location(value)
-    all.find { |transport| transport.location == value }
-  end
-
-  def self.filter_by_location(value)
-    all.select { |transport| transport.location == value }
-  end
-
-  def self.find_by_number_of_deliveries(value)
-    all.find { |transport| transport.number_of_deliveries == value }
-  end
-
-  def self.filter_by_number_of_deliveries(&block)
-    all.select { |transport| block.call(transport.number_of_deliveries) }
-  end
-
-  def self.find_by_delivery_cost(value)
-    all.find { |transport| transport.delivery_cost == value }
-  end
-
-  def self.filter_by_delivery_cost(&block)
-    all.select { |transport| block.call(transport.delivery_cost) }
+  ALL_ATRIBUTES.each do |i|
+    define_singleton_method("filter_by_#{i}".to_sym) do |&block|
+      all.select { |tr| block.call(tr.send(i)) }
+    end
   end
 end
